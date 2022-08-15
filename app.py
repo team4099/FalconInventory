@@ -48,8 +48,8 @@ class App:
         data = str(self.js.document.getElementById(id).value)
         part = Part.query.filter_by(id=ids[0]).one()
         db.session.delete(part)
-        print("deleting")
         db.session.commit()
+        flash(f"Deleted {part.pn} successfully.") #this might not work bc part is deleted but not sure
 
 class Part(db.Model):
     id = db.Column(db.String, primary_key=True)
@@ -77,19 +77,26 @@ class Part(db.Model):
 
 @app.route("/", methods=["GET", "POST"])
 def homepage():
+    flash_color="text-white"
     if request.method == "POST":
         if request.form["pn"] != "" and request.form["description"] != "" and request.form["category"] and request.form["quantity"] != "" and request.form["box"] != "":
             part = Part(request.form["pn"], request.form["description"], request.form["category"], request.form["quantity"], request.form["box"])
             db.session.add(part)
             db.session.commit()
+            part_name = request.form["pn"]
+            message = f"Success! {part_name} added"
+            flash_color = "text-green-500"
         else:
-            print("Error")
+            message = "Please fill out all fields."
+            flash_color = "text-red-500"
+        flash(message)
 
     return App.render(render_template(
         "index.html",
         title="Home",
         cdns=["https://cdnjs.cloudflare.com/ajax/libs/d3/7.6.1/d3.min.js"],
-        parts=Part.query.all()
+        parts=Part.query.all(),
+        flash_color=flash_color
     ))
 
 if __name__ == "__main__":

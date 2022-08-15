@@ -6,13 +6,19 @@
         Add
     </h1>
 
+    {%- for category, message in get_flashed_messages(with_categories = true) %}
+    <div class="alert alert-danger p-1 {{ flash_color }}">
+        {{ message }}
+    </div>
+    {%- endfor %}
+
     <form action="{{ request.path }}" method="post">
         <div class="overflow-x-auto relative mb-4">
             <table class="rounded rounded-lg w-full text-sm text-left text-gray-500 dark:text-gray-400">
                 <thead class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
                     <tr class="">
                         <th scope="col" class="py-3 px-6">
-                            Name/PN 
+                            Name/PN
                         </th>
                         <th scope="col" class="py-3 px-6">
                             Description
@@ -31,19 +37,19 @@
                 <tbody>
                     <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700">
                         <th scope="row" class="py-4 px-6 font-medium text-gray-900 whitespace-nowrap dark:text-white">
-                            <input class="bg-transparent w-full h-full m-0 rounded-md" type="text" name="pn"/>
+                            <input class="bg-transparent w-full h-full m-0 rounded-md" type="text" name="pn" />
                         </th>
                         <td class="py-4 px-6">
-                            <input class="bg-transparent w-full h-full m-0 rounded-md" type="text" name="description"/>
+                            <input class="bg-transparent w-full h-full m-0 rounded-md" type="text" name="description" />
                         </td>
                         <td class="py-4 px-6">
-                            <input class="bg-transparent w-full h-full m-0 rounded-md" type="text" name="category"/>
+                            <input class="bg-transparent w-full h-full m-0 rounded-md" type="text" name="category" />
                         </td>
                         <td class="py-4 px-6">
-                            <input class="bg-transparent w-full h-full m-0 rounded-md" type="text" name="quantity"/>
+                            <input class="bg-transparent w-full h-full m-0 rounded-md" type="text" name="quantity" />
                         </td>
                         <td class="py-4 px-6">
-                            <input class="bg-transparent w-full h-full m-0 rounded-md" type="text" name="box"/>
+                            <input class="bg-transparent w-full h-full m-0 rounded-md" type="text" name="box" />
                         </td>
                     </tr>
                 </tbody>
@@ -72,7 +78,7 @@
             <thead class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
                 <tr class="">
                     <th scope="col" class="w-8 py-3 px-6">
-                        Name/PN 
+                        Name/PN
                     </th>
                     <th scope="col" class="py-3 px-6">
                         Description
@@ -95,26 +101,38 @@
                 {% for part in parts %}
                 <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700" id="{{ part.id }}">
                     <th scope="row" class="py-4 px-6 font-medium text-gray-900 whitespace-nowrap dark:text-white">
-                        <input class="bg-transparent w-max h-max border-none focus:border-gray-700" type="text" name="pn" value="{{ part.pn }}" id="{{ part.id+".pn" }}" onChange="server.update(this.id)"/>
+                        <input class="bg-transparent w-max h-max border-none focus:border-gray-700" type="text"
+                            name="pn" value="{{ part.pn }}" id="{{ part.id+" .pn" }}"
+                            onChange="server.update(this.id)" />
                     </th>
                     <td class="py-4 px-6">
-                        <input class="bg-transparent w-max h-max border-none focus:border-gray-700" type="text" name="description" value="{{ part.description }}" id="{{ part.id+".description" }}" onChange="server.update(this.id)"/>
-            
+                        <input class="bg-transparent w-max h-max border-none focus:border-gray-700" type="text"
+                            name="description" value="{{ part.description }}" id="{{ part.id+" .description" }}"
+                            onChange="server.update(this.id)" />
+
                     </td>
                     <td class="py-4 px-6">
-                        <input class="bg-transparent w-max h-max border-none focus:border-gray-700" type="text" name="category" value="{{ part.category }}" id="{{ part.id+".category" }}" onChange="server.update(this.id)"/>
-            
+                        <input class="bg-transparent w-max h-max border-none focus:border-gray-700" type="text"
+                            name="category" value="{{ part.category }}" id="{{ part.id+" .category" }}"
+                            onChange="server.update(this.id)" />
+
                     </td>
                     <td class="py-4 px-6">
-                        <input class="bg-transparent w-max h-max border-none focus:border-gray-700" type="text" name="quantity" value="{{ part.quantity }}" id="{{ part.id+".quantity" }}" onChange="server.update(this.id)"/>
-            
+                        <input class="bg-transparent w-max h-max border-none focus:border-gray-700" type="text"
+                            name="quantity" value="{{ part.quantity }}" id="{{ part.id+" .quantity" }}"
+                            onChange="server.update(this.id)" />
+
                     </td>
                     <td class="py-4 px-6">
-                        <input class="bg-transparent w-max h-max border-none focus:border-gray-700" type="text" name="box" value="{{ part.box }}" id="{{ part.id+".box" }}" onChange="server.update(this.id)"/ >
+                        <input class="bg-transparent w-max h-max border-none focus:border-gray-700" type="text"
+                            name="box" value="{{ part.box }}" id="{{ part.id+" .box" }}"
+                            onChange="server.update(this.id)" />
                     </td>
                     <td class="py-4 px-6">
-                        <a class="bg-transparent w-max h-max border-none focus:border-gray-700" name="box" id="{{ part.id+".delete" }}" onclick="server.delete_part(this.id); document.getElementById('{{ part.id }}').style.display = 'none'"/>
-                            x
+                        <a class="bg-transparent w-max h-max border-none focus:border-gray-700" name="box"
+                            id="{{ part.id+" .delete" }}"
+                            onclick="server.delete_part(this.id); document.getElementById('{{ part.id }}').style.display = 'none'" />
+                        x
                         </a>
                     </td>
                 </tr>
@@ -125,4 +143,3 @@
 </div>
 
 {% endblock content %}
-
