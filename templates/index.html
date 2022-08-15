@@ -1,0 +1,128 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="w-3/4 mx-auto mt-5">
+    <h1 class="text-4xl text-white font-semibold mb-8">
+        Add
+    </h1>
+
+    <form action="{{ request.path }}" method="post">
+        <div class="overflow-x-auto relative mb-4">
+            <table class="rounded rounded-lg w-full text-sm text-left text-gray-500 dark:text-gray-400">
+                <thead class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
+                    <tr class="">
+                        <th scope="col" class="py-3 px-6">
+                            Name/PN 
+                        </th>
+                        <th scope="col" class="py-3 px-6">
+                            Description
+                        </th>
+                        <th scope="col" class="py-3 px-6">
+                            Category
+                        </th>
+                        <th scope="col" class="py-3 px-6">
+                            Quantity
+                        </th>
+                        <th scope="col" class="py-3 px-6">
+                            Box
+                        </th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700">
+                        <th scope="row" class="py-4 px-6 font-medium text-gray-900 whitespace-nowrap dark:text-white">
+                            <input class="bg-transparent w-full h-full m-0 rounded-md" type="text" name="pn"/>
+                        </th>
+                        <td class="py-4 px-6">
+                            <input class="bg-transparent w-full h-full m-0 rounded-md" type="text" name="description"/>
+                        </td>
+                        <td class="py-4 px-6">
+                            <input class="bg-transparent w-full h-full m-0 rounded-md" type="text" name="category"/>
+                        </td>
+                        <td class="py-4 px-6">
+                            <input class="bg-transparent w-full h-full m-0 rounded-md" type="text" name="quantity"/>
+                        </td>
+                        <td class="py-4 px-6">
+                            <input class="bg-transparent w-full h-full m-0 rounded-md" type="text" name="box"/>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <button type="submit"
+            class="inline-flex mb-12 items-center py-2 px-3 text-sm font-medium text-center text-white bg-blue-700 rounded-lg hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">
+            Submit
+            <svg aria-hidden="true" class="ml-2 -mr-1 w-4 h-4" fill="currentColor" viewBox="0 0 20 20"
+                xmlns="http://www.w3.org/2000/svg">
+                <path fill-rule="evenodd"
+                    d="M10.293 3.293a1 1 0 011.414 0l6 6a1 1 0 010 1.414l-6 6a1 1 0 01-1.414-1.414L14.586 11H3a1 1 0 110-2h11.586l-4.293-4.293a1 1 0 010-1.414z"
+                    clip-rule="evenodd"></path>
+            </svg>
+        </button>
+
+    </form>
+
+    <h1 class="text-4xl text-white font-semibold mb-8">
+        Current
+    </h1>
+
+    <div class="overflow-x-auto relative">
+        <table class="table-auto rounded rounded-lg w-full text-sm text-left text-gray-500 dark:text-gray-400">
+            <thead class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
+                <tr class="">
+                    <th scope="col" class="w-8 py-3 px-6">
+                        Name/PN 
+                    </th>
+                    <th scope="col" class="py-3 px-6">
+                        Description
+                    </th>
+                    <th scope="col" class="py-3 px-6">
+                        Category
+                    </th>
+                    <th scope="col" class="py-3 px-6">
+                        Quantity
+                    </th>
+                    <th scope="col" class="py-3 px-6">
+                        Box
+                    </th>
+                    <th scope="col" class="py-3 px-6">
+                        Delete
+                    </th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for part in parts %}
+                <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700" id="{{ part.id }}">
+                    <th scope="row" class="py-4 px-6 font-medium text-gray-900 whitespace-nowrap dark:text-white">
+                        <input class="bg-transparent w-max h-max border-none focus:border-gray-700" type="text" name="pn" value="{{ part.pn }}" id="{{ part.id+".pn" }}" onChange="server.update(this.id)"/>
+                    </th>
+                    <td class="py-4 px-6">
+                        <input class="bg-transparent w-max h-max border-none focus:border-gray-700" type="text" name="description" value="{{ part.description }}" id="{{ part.id+".description" }}" onChange="server.update(this.id)"/>
+            
+                    </td>
+                    <td class="py-4 px-6">
+                        <input class="bg-transparent w-max h-max border-none focus:border-gray-700" type="text" name="category" value="{{ part.category }}" id="{{ part.id+".category" }}" onChange="server.update(this.id)"/>
+            
+                    </td>
+                    <td class="py-4 px-6">
+                        <input class="bg-transparent w-max h-max border-none focus:border-gray-700" type="text" name="quantity" value="{{ part.quantity }}" id="{{ part.id+".quantity" }}" onChange="server.update(this.id)"/>
+            
+                    </td>
+                    <td class="py-4 px-6">
+                        <input class="bg-transparent w-max h-max border-none focus:border-gray-700" type="text" name="box" value="{{ part.box }}" id="{{ part.id+".box" }}" onChange="server.update(this.id)"/ >
+                    </td>
+                    <td class="py-4 px-6">
+                        <a class="bg-transparent w-max h-max border-none focus:border-gray-700" name="box" id="{{ part.id+".delete" }}" onclick="server.delete_part(this.id); document.getElementById('{{ part.id }}').style.display = 'none'"/>
+                            x
+                        </a>
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</div>
+
+{% endblock content %}
+
