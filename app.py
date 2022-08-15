@@ -1,11 +1,9 @@
 from unicodedata import category
 from flask import Flask, request, flash, url_for, redirect, render_template
-from flask_qrcode import QRcode
 from flask_sqlalchemy import SQLAlchemy
 from sqlalchemy import Enum
 import os
 from dotenv import load_dotenv
-import json
 import json
 import jyserver.Flask as jsf
 import os,binascii
